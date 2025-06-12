@@ -5,7 +5,15 @@ import { useAuth } from '../../contexts/AuthContext';
 import UserAvatar from './UserAvatar';
 
 export default function Navbar({ showAuthLinks = true }) {
-  const { user } = useAuth();
+  const { user, signInWithGoogle } = useAuth();
+
+  const handleSignUp = async () => {
+    try {
+      await signInWithGoogle();
+    } catch (error) {
+      console.error('Sign up failed:', error);
+    }
+  };
 
   return (
     <nav className="flex items-center justify-between px-8 py-4 bg-white/80 backdrop-blur-sm shadow-sm relative z-50">
@@ -30,12 +38,12 @@ export default function Navbar({ showAuthLinks = true }) {
                 <Link to="/about" className="hover:text-blue-600 transition-colors">About Us</Link>
                 
                 {/* Sign Up Button */}
-                <Link 
-                  to="/" 
+                <button 
+                  onClick={handleSignUp}
                   className="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition-colors"
                 >
                   Sign Up
-                </Link>
+                </button>
               </>
             ) : (
               <>
