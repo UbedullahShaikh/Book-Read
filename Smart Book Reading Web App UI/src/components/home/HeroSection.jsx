@@ -24,7 +24,7 @@ export default function HeroSection() {
         <h2 className="text-4xl sm:text-6xl font-bold mb-6 leading-tight bg-gradient-to-r from-green-600 to-blue-600 bg-clip-text text-transparent">
           Welcome back, {user.displayName || 'Reader'}!
         </h2>
-        <p className="text-xl text-gray-600 dark:text-gray-300 mb-10 max-w-2xl">
+        <p className="text-xl text-gray-600 mb-10 max-w-2xl">
           Ready to continue your reading journey? Explore your dashboard or discover new books.
         </p>
 
@@ -66,7 +66,7 @@ export default function HeroSection() {
         Read Smarter.<br />
         Learn Deeper.
       </h1>
-      <p className="text-xl sm:text-2xl text-gray-600 dark:text-gray-300 mb-10 max-w-3xl">
+      <p className="text-xl sm:text-2xl text-gray-600 mb-10 max-w-3xl">
         An AI-powered book reader that understands your reading needs and helps you unlock deeper insights from every page.
       </p>
 
