@@ -1,17 +1,10 @@
 import React from 'react';
 import { useAuth } from '../../contexts/AuthContext';
-import GoogleSignInButton from '../auth/GoogleSignInButton';
+import { Link } from 'react-router-dom';
+import { ArrowRight, BookOpen } from 'lucide-react';
 
 export default function CallToAction() {
-  const { user, signInWithGoogle } = useAuth();
-
-  const handleSignIn = async () => {
-    try {
-      await signInWithGoogle();
-    } catch (error) {
-      console.error('Sign in failed:', error);
-    }
-  };
+  const { user } = useAuth();
 
   if (user) {
     return null; // Don't show CTA for logged in users
@@ -28,10 +21,20 @@ export default function CallToAction() {
         </p>
         
         <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-          <GoogleSignInButton 
-            onClick={handleSignIn}
-            className="bg-white hover:bg-gray-50 text-gray-700 px-8 py-4 text-lg font-medium"
-          />
+          <Link 
+            to="/signup"
+            className="flex items-center justify-center gap-2 bg-white hover:bg-gray-50 text-gray-700 px-8 py-4 text-lg font-medium rounded-lg transition-all duration-300 hover:scale-105 shadow-lg"
+          >
+            Get Started
+            <ArrowRight className="w-5 h-5" />
+          </Link>
+          <Link 
+            to="/login"
+            className="flex items-center justify-center gap-2 border-2 border-white text-white hover:bg-white hover:text-gray-700 px-8 py-4 text-lg font-medium rounded-lg transition-all duration-300 hover:scale-105"
+          >
+            Sign In
+            <BookOpen className="w-5 h-5" />
+          </Link>
         </div>
         
         <p className="text-blue-200 text-sm mt-6">

@@ -1,16 +1,22 @@
 import React from 'react';
-import { BrowserRouter as Router } from 'react-router-dom';
+import { BrowserRouter } from 'react-router-dom';
 import { AuthProvider } from './contexts/AuthContext';
 import AppRoutes from './routes/AppRoutes';
-// Import other pages here...
+import Navbar from './components/common/Navbar';
+
 
 function App() {
   return (
-    <Router>
+    <BrowserRouter>
       <AuthProvider>
-        <AppRoutes />
+        <div className="min-h-screen bg-gray-50">
+          <Navbar />
+          <main>
+            <AppRoutes />
+          </main>
+        </div>
       </AuthProvider>
-    </Router>
+    </BrowserRouter>
   );
 }
 

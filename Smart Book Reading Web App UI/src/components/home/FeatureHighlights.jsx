@@ -1,5 +1,5 @@
 import React from 'react';
-import { Brain, BookOpen, Target, FileText, MessageSquare, Zap, Shield, Clock } from 'lucide-react';
+import { Brain, BookOpen, Target, FileText, MessageSquare, Zap } from 'lucide-react';
 
 export default function FeatureHighlights() {
   const features = [

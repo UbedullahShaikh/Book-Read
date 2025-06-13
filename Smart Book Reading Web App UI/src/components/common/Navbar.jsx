@@ -5,15 +5,7 @@ import { useAuth } from '../../contexts/AuthContext';
 import UserAvatar from './UserAvatar';
 
 export default function Navbar({ showAuthLinks = true }) {
-  const { user, signInWithGoogle } = useAuth();
-
-  const handleSignUp = async () => {
-    try {
-      await signInWithGoogle();
-    } catch (error) {
-      console.error('Sign up failed:', error);
-    }
-  };
+  const { user } = useAuth();
 
   return (
     <nav className="flex items-center justify-between px-8 py-4 bg-white/80 backdrop-blur-sm shadow-sm relative z-50">
@@ -36,14 +28,20 @@ export default function Navbar({ showAuthLinks = true }) {
                 <Link to="/explore" className="hover:text-blue-600 transition-colors">Explore</Link>
                 <Link to="/services" className="hover:text-blue-600 transition-colors">Services</Link>
                 <Link to="/about" className="hover:text-blue-600 transition-colors">About Us</Link>
-                
+                {/* Login Button */}
+                <Link 
+                  to="/login"
+                  className="px-4 py-2 bg-gray-100 hover:bg-blue-100 text-blue-700 rounded-lg transition-colors border border-blue-600"
+                >
+                  Login
+                </Link>
                 {/* Sign Up Button */}
-                <button 
-                  onClick={handleSignUp}
+                <Link 
+                  to="/signup"
                   className="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition-colors"
                 >
                   Sign Up
-                </button>
+                </Link>
               </>
             ) : (
               <>
@@ -53,9 +51,10 @@ export default function Navbar({ showAuthLinks = true }) {
                 <Link to="/services" className="hover:text-blue-600 transition-colors">Services</Link>
                 <Link to="/about" className="hover:text-blue-600 transition-colors">About Us</Link>
                 <Link to="/dashboard" className="hover:text-blue-600 transition-colors">Dashboard</Link>
-                
-                {/* User Avatar */}
-                <UserAvatar user={user} />
+                {/* User Avatar only, no Logout button */}
+                <div className="flex items-center gap-3">
+                  <UserAvatar user={user} />
+                </div>
               </>
             )}
           </>

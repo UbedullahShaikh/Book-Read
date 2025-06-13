@@ -1,18 +1,10 @@
 import React from 'react';
-import { Library, Sparkles, BookOpen, ArrowRight, Brain, MessageCircle, Search, Target } from 'lucide-react';
+import { Library, Sparkles, BookOpen, ArrowRight, Brain } from 'lucide-react';
 import { useAuth } from '../../contexts/AuthContext';
-import GoogleSignInButton from '../auth/GoogleSignInButton';
+import { Link } from 'react-router-dom';
 
 export default function HeroSection() {
-  const { user, signInWithGoogle } = useAuth();
-
-  const handleSignIn = async () => {
-    try {
-      await signInWithGoogle();
-    } catch (error) {
-      console.error('Sign in failed:', error);
-    }
-  };
+  const { user } = useAuth();
 
   if (user) {
     // Content for logged in users
@@ -78,8 +70,21 @@ export default function HeroSection() {
         An AI-powered book reader that understands your reading needs and helps you unlock deeper insights from every page.
       </p>
 
-      <div className="mb-16">
-        <GoogleSignInButton onClick={handleSignIn} />
+      <div className="mb-16 flex flex-col sm:flex-row gap-4">
+        <Link 
+          to="/signup"
+          className="flex items-center justify-center gap-2 px-8 py-4 bg-blue-600 hover:bg-blue-700 text-white rounded-2xl text-lg font-medium transition-all duration-300 hover:scale-105 shadow-lg"
+        >
+          Get Started
+          <ArrowRight className="w-5 h-5" />
+        </Link>
+        <Link 
+          to="/login"
+          className="flex items-center justify-center gap-2 px-8 py-4 border-2 border-blue-600 text-blue-600 hover:bg-blue-50 rounded-2xl text-lg font-medium transition-all duration-300 hover:scale-105"
+        >
+          Sign In
+          <BookOpen className="w-5 h-5" />
+        </Link>
       </div>
 
       {/* Visual Preview */}

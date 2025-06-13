@@ -65,20 +65,3 @@
 .dark .focus\:border-transparent:focus {
   border-color: transparent;
 }
-
-/* Font size adjustments */
-.text-small {
-  font-size: 14px;
-}
-
-.text-medium {
-  font-size: 16px;
-}
-
-.text-large {
-  font-size: 18px;
-}
-
-.text-extra-large {
-  font-size: 20px;
-}

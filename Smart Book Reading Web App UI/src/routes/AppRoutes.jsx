@@ -6,8 +6,9 @@ import Explore from "../pages/Explore";
 import Services from "../pages/Services";
 import AboutUs from "../pages/AboutUs";
 import ProfilePage from "../components/profile/ProfilePage";
-import SettingsPage from "../components/settings/SettingsPage";
 import ProtectedRoute from "../components/auth/ProtectedRoute";
+import LoginPage from "../pages/LoginPage";
+import SignupPage from "../pages/SignupPage";
 
 const AppRoutes = memo(() => {
   return (
@@ -17,6 +18,8 @@ const AppRoutes = memo(() => {
         <Route path="/explore" element={<Explore />} />
         <Route path="/services" element={<Services />} />
         <Route path="/about" element={<AboutUs />} />
+        <Route path="/login" element={<LoginPage />} />
+        <Route path="/signup" element={<SignupPage />} />
         
         {/* Protected Routes */}
         <Route path="/dashboard" element={
@@ -27,11 +30,6 @@ const AppRoutes = memo(() => {
         <Route path="/profile" element={
           <ProtectedRoute>
             <ProfilePage />
-          </ProtectedRoute>
-        } />
-        <Route path="/settings" element={
-          <ProtectedRoute>
-            <SettingsPage />
           </ProtectedRoute>
         } />
       </Routes>
