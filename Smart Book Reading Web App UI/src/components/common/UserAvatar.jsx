@@ -1,10 +1,11 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { UserCircle, LogOut, User } from 'lucide-react';
+import { UserCircle, LogOut, User, Moon, Sun } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../contexts/AuthContext';
 
 export default function UserAvatar({ user }) {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const [isDarkMode, setIsDarkMode] = useState(false);
   const dropdownRef = useRef(null);
   const { logout } = useAuth();
   const navigate = useNavigate();
@@ -22,6 +23,15 @@ export default function UserAvatar({ user }) {
     };
   }, []);
 
+  // Check initial theme from localStorage
+  useEffect(() => {
+    const savedTheme = localStorage.getItem('theme');
+    if (savedTheme === 'dark') {
+      setIsDarkMode(true);
+      document.documentElement.classList.add('dark');
+    }
+  }, []);
+
   const handleLogout = async () => {
     try {
       await logout();
@@ -34,6 +44,19 @@ export default function UserAvatar({ user }) {
   const handleNavigation = (path) => {
     navigate(path);
     setIsDropdownOpen(false);
+  };
+
+  const handleThemeToggle = () => {
+    const newTheme = !isDarkMode;
+    setIsDarkMode(newTheme);
+    
+    if (newTheme) {
+      document.documentElement.classList.add('dark');
+      localStorage.setItem('theme', 'dark');
+    } else {
+      document.documentElement.classList.remove('dark');
+      localStorage.setItem('theme', 'light');
+    }
   };
 
   return (
@@ -75,6 +98,32 @@ export default function UserAvatar({ user }) {
               <User className="w-4 h-4" />
               Profile
             </button>
+          </div>
+
+          {/* Theme Toggle */}
+          <div className="py-1 border-t border-gray-100">
+            <div className="flex items-center justify-between px-4 py-2">
+              <div className="flex items-center gap-3">
+                {isDarkMode ? (
+                  <Moon className="w-4 h-4 text-gray-700" />
+                ) : (
+                  <Sun className="w-4 h-4 text-gray-700" />
+                )}
+                <span className="text-sm text-gray-700">Theme</span>
+              </div>
+              <button
+                onClick={handleThemeToggle}
+                className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 ${
+                  isDarkMode ? 'bg-blue-600' : 'bg-gray-200'
+                }`}
+              >
+                <span
+                  className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${
+                    isDarkMode ? 'translate-x-6' : 'translate-x-1'
+                  }`}
+                />
+              </button>
+            </div>
           </div>
           
           <div className="border-t border-gray-100 pt-1">
