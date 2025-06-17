@@ -7,7 +7,7 @@ export default function UserAvatar({ user }) {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [isDarkMode, setIsDarkMode] = useState(false);
   const dropdownRef = useRef(null);
-  const { logout } = useAuth();
+  const { signOut } = useAuth();
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -34,7 +34,7 @@ export default function UserAvatar({ user }) {
 
   const handleLogout = async () => {
     try {
-      await logout();
+      await signOut();
       setIsDropdownOpen(false);
     } catch (error) {
       console.error('Logout failed:', error);

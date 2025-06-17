@@ -1,0 +1,51 @@
+# Dependencies
+node_modules/
+package-lock.json
+
+# Environment variables (critical for security)
+.env
+
+
+# Logs
+logs/
+*.log
+
+
+# Optional npm cache directory
+.npm
+
+# Optional eslint cache
+
+
+# Optional REPL history
+# Output of 'npm pack'
+*.tgz
+
+# Yarn Integrity file
+
+# dotenv environment variables file
+.env
+
+# Temporary folders
+
+# IDE and Editor files
+.vscode/
+.idea/
+
+# OS generated files
+
+
+# Local development files
+.local/
+
+# Build directories (if you add a build step)
+build/
+dist/
+out/
+
+# Test files (if you add testing)
+test-results/
+coverage/
+
+# JWT Secret file (create this for production)
+jwt-secret.txt 

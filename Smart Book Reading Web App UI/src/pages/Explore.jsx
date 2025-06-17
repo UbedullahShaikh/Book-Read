@@ -1,8 +1,147 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import PageLayout from '../components/layout/PageLayout';
-import { Search, BookOpen, Filter } from 'lucide-react';
+import SearchBar from '../components/explore/SearchBar';
+import FilterBar from '../components/explore/FilterBar';
+import BookGrid from '../components/explore/BookGrid';
+import ErrorAlert from '../components/common/ErrorAlert';
+import LoadingSpinner from '../components/common/LoadingSpinner';
+
+// Backend API base URL
+const API_BASE_URL = 'http://localhost:3000/api';
 
 export default function Explore() {
+  const [books, setBooks] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+  const [searchQuery, setSearchQuery] = useState('');
+  const [selectedGenre, setSelectedGenre] = useState('');
+  const [selectedCategory, setSelectedCategory] = useState('');
+
+  // Fetch books from backend
+  useEffect(() => {
+    fetchBooks();
+  }, []);
+
+  const fetchBooks = async () => {
+    try {
+      setLoading(true);
+      setError(null);
+      
+      const response = await fetch(`${API_BASE_URL}/books`);
+      const data = await response.json();
+      
+      if (data.success) {
+        setBooks(data.data.books);
+      } else {
+        setError(data.message || 'Failed to fetch books');
+      }
+    } catch (error) {
+      console.error('Error fetching books:', error);
+      setError('Failed to load books. Please try again.');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  // Search books
+  const handleSearch = async () => {
+    if (!searchQuery.trim()) {
+      fetchBooks();
+      return;
+    }
+
+    try {
+      setLoading(true);
+      setError(null);
+      
+      const response = await fetch(`${API_BASE_URL}/books/search/${encodeURIComponent(searchQuery)}`);
+      const data = await response.json();
+      
+      if (data.success) {
+        setBooks(data.data.books);
+      } else {
+        setError(data.message || 'Search failed');
+      }
+    } catch (error) {
+      console.error('Search error:', error);
+      setError('Search failed. Please try again.');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  // Filter by genre
+  const handleGenreFilter = async (genre) => {
+    setSelectedGenre(genre);
+    setSelectedCategory('');
+    
+    if (!genre) {
+      fetchBooks();
+      return;
+    }
+
+    try {
+      setLoading(true);
+      setError(null);
+      
+      const response = await fetch(`${API_BASE_URL}/books/genre/${encodeURIComponent(genre)}`);
+      const data = await response.json();
+      
+      if (data.success) {
+        setBooks(data.data.books);
+      } else {
+        setError(data.message || 'Filter failed');
+      }
+    } catch (error) {
+      console.error('Genre filter error:', error);
+      setError('Filter failed. Please try again.');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  // Filter by category
+  const handleCategoryFilter = async (category) => {
+    setSelectedCategory(category);
+    setSelectedGenre('');
+    
+    if (!category) {
+      fetchBooks();
+      return;
+    }
+
+    try {
+      setLoading(true);
+      setError(null);
+      
+      const response = await fetch(`${API_BASE_URL}/books/category/${encodeURIComponent(category)}`);
+      const data = await response.json();
+      
+      if (data.success) {
+        setBooks(data.data.books);
+      } else {
+        setError(data.message || 'Filter failed');
+      }
+    } catch (error) {
+      console.error('Category filter error:', error);
+      setError('Filter failed. Please try again.');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  // Clear all filters
+  const handleClearFilters = () => {
+    setSearchQuery('');
+    setSelectedGenre('');
+    setSelectedCategory('');
+    fetchBooks();
+  };
+
+  // Get unique genres and categories
+  const genres = [...new Set(books.map(book => book.genre))];
+  const categories = [...new Set(books.map(book => book.category))];
+
   return (
     <PageLayout>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
@@ -17,48 +156,40 @@ export default function Explore() {
         </div>
 
         {/* Search and Filters */}
-        <div className="flex flex-col sm:flex-row gap-4 mb-8">
-          <div className="relative flex-1">
-            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
-            <input
-              type="text"
-              placeholder="Search books, authors, or categories..."
-              className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-            />
-          </div>
-          <button className="flex items-center gap-2 px-6 py-3 bg-gray-100 hover:bg-gray-200 rounded-lg transition-colors">
-            <Filter className="w-5 h-5" />
-            Filters
-          </button>
-        </div>
+        <SearchBar 
+          searchQuery={searchQuery}
+          setSearchQuery={setSearchQuery}
+          onSearch={handleSearch}
+        />
 
-        {/* Coming Soon Section */}
-        <div className="text-center py-16">
-          <div className="bg-white/80 backdrop-blur-sm rounded-2xl shadow-xl p-12 border border-gray-200">
-            <BookOpen className="w-24 h-24 text-blue-500 mx-auto mb-6" />
-            <h2 className="text-3xl font-bold text-gray-900 mb-4">
-              Book Library Coming Soon!
-            </h2>
-            <p className="text-lg text-gray-600 mb-8 max-w-2xl mx-auto">
-              We're working hard to bring you an amazing collection of books. 
-              Soon you'll be able to explore, search, and discover your next favorite read.
-            </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <button 
-                onClick={() => alert('Upload feature coming soon!')}
-                className="px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition-colors"
-              >
-                Upload Your Books
-              </button>
-              <button 
-                onClick={() => window.location.href = '/services'}
-                className="px-6 py-3 border border-blue-600 text-blue-600 hover:bg-blue-50 rounded-lg transition-colors"
-              >
-                Learn More
-              </button>
-            </div>
+        <FilterBar 
+          selectedGenre={selectedGenre}
+          setSelectedGenre={setSelectedGenre}
+          selectedCategory={selectedCategory}
+          setSelectedCategory={setSelectedCategory}
+          genres={genres}
+          categories={categories}
+          onGenreFilter={handleGenreFilter}
+          onCategoryFilter={handleCategoryFilter}
+          onClearFilters={handleClearFilters}
+        />
+
+        <ErrorAlert message={error} className="mb-8" />
+
+        {/* Loading State */}
+        {loading && (
+          <div className="flex justify-center py-16">
+            <LoadingSpinner />
           </div>
-        </div>
+        )}
+
+        {/* Books Grid */}
+        {!loading && !error && (
+          <BookGrid 
+            books={books} 
+            onViewAllBooks={handleClearFilters}
+          />
+        )}
       </div>
     </PageLayout>
   );

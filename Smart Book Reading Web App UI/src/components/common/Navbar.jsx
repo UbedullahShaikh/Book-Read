@@ -26,8 +26,7 @@ export default function Navbar({ showAuthLinks = true }) {
                 {/* Navigation Links for Non-logged in Users */}
                 <Link to="/" className="hover:text-blue-600 transition-colors">Home</Link>
                 <Link to="/explore" className="hover:text-blue-600 transition-colors">Explore</Link>
-                <Link to="/services" className="hover:text-blue-600 transition-colors">Services</Link>
-                <Link to="/about" className="hover:text-blue-600 transition-colors">About Us</Link>
+                <Link to="/about" className="hover:text-blue-600 transition-colors">About</Link>
                 {/* Login Button */}
                 <Link 
                   to="/login"
@@ -48,8 +47,7 @@ export default function Navbar({ showAuthLinks = true }) {
                 {/* Navigation Links for Logged in Users */}
                 <Link to="/" className="hover:text-blue-600 transition-colors">Home</Link>
                 <Link to="/explore" className="hover:text-blue-600 transition-colors">Explore</Link>
-                <Link to="/services" className="hover:text-blue-600 transition-colors">Services</Link>
-                <Link to="/about" className="hover:text-blue-600 transition-colors">About Us</Link>
+                <Link to="/about" className="hover:text-blue-600 transition-colors">About</Link>
                 <Link to="/dashboard" className="hover:text-blue-600 transition-colors">Dashboard</Link>
                 {/* User Avatar only, no Logout button */}
                 <div className="flex items-center gap-3">

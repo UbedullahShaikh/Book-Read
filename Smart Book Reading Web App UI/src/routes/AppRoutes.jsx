@@ -3,7 +3,6 @@ import { Routes, Route } from "react-router-dom";
 import Home from "../pages/Home";
 import Dashboard from "../pages/Dashboard";
 import Explore from "../pages/Explore";
-import Services from "../pages/Services";
 import AboutUs from "../pages/AboutUs";
 import ProfilePage from "../components/profile/ProfilePage";
 import ProtectedRoute from "../components/auth/ProtectedRoute";
@@ -16,7 +15,6 @@ const AppRoutes = memo(() => {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/explore" element={<Explore />} />
-        <Route path="/services" element={<Services />} />
         <Route path="/about" element={<AboutUs />} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/signup" element={<SignupPage />} />
